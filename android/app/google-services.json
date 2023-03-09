@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "220237089469",
+    "project_id": "cethostel-f837e",
+    "storage_bucket": "cethostel-f837e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220237089469:android:61d17e3dd107c1d07585d4",
+        "android_client_info": {
+          "package_name": "com.example.cet_hostel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220237089469-v6i9h3fcpcpeb525cb7dhq76mj545cbm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd8btM1cp1LQdRy4G8Y1dXY5KsEtycSlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220237089469-v6i9h3fcpcpeb525cb7dhq76mj545cbm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
