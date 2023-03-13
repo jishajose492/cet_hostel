@@ -4,6 +4,7 @@ import 'package:cet_hostel/responsive/web_screen_layout.dart';
 import 'package:cet_hostel/screens/login_screen.dart';
 import 'package:cet_hostel/screens/signup_screen.dart';
 import 'package:cet_hostel/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +39,31 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: const ResponsiveLayout(
-      //   MobileScreenLayout: MobileScreenLayout(),
-      //   WebScreenLayout: WebScreenLayout(),
-      // ),
-      home: SignUpScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return const ResponsiveLayout(
+                MobileScreenLayout: MobileScreenLayout(),
+                WebScreenLayout: WebScreenLayout(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            }
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: primaryColor,
+              ),
+            );
+          }
+          return const LoginScreen();
+        },
+      ),
     );
   }
 }

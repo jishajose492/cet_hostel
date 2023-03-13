@@ -1,9 +1,15 @@
 import 'dart:io';
 
+import 'package:cet_hostel/resources/auth_methods.dart';
 import 'package:cet_hostel/screens/signup_screen.dart';
 import 'package:cet_hostel/utils/colors.dart';
+import 'package:cet_hostel/utils/utils.dart';
 import 'package:cet_hostel/widgets/text_field_input.dart';
 import 'package:flutter/material.dart';
+
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,11 +21,37 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
+  bool _isLoading = false;
   @override
   void dispose() {
     super.dispose();
     _emailcontroller.dispose();
     _passwordcontroller.dispose();
+  }
+
+  void loginuser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+      email: _emailcontroller.text,
+      password: _passwordcontroller.text,
+    );
+    if (res == "Success") {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            MobileScreenLayout: MobileScreenLayout(),
+            WebScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
+    } else {
+      showSnackBar(res, context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -123,30 +155,37 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               //button
 
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: w * 0.5,
-                  height: h * 0.08,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/grey2.jpg",
-                        ),
-                        fit: BoxFit.cover),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Sign in",
-                      style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
+              Container(
+                width: w * 0.5,
+                height: h * 0.08,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/grey2.jpg",
+                      ),
+                      fit: BoxFit.cover),
+                ),
+                child: Center(
+                  child: InkWell(
+                    onTap: loginuser,
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
+                          )
+                        : const Text(
+                            "Sign in",
+                            style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
                   ),
                 ),
               ),
+
               SizedBox(
                 height: w * 0.04,
               ),
