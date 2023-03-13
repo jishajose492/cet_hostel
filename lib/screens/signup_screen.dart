@@ -213,8 +213,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 child: Center(
                   child: InkWell(
-                    onTap: () {
-                      print('hi');
+                    onTap: () async {
+                      String res = await AuthMethods().SignUpUser(
+                          email: _emailcontroller.text,
+                          password: _passwordcontroller.text,
+                          username: _usernamecontroller.text,
+                          phone: _phonecontroller.text);
+
+                      print(res);
                     },
                     child: Text(
                       "Sign up",
@@ -271,9 +277,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-  }
-
-  void getname() {
-    print("hi");
   }
 }
