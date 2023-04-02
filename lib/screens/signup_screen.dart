@@ -47,27 +47,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _isloading = true;
     });
-    String res = await AuthMethods().SignUpUser(
-      email: _emailcontroller.text,
-      password: _passwordcontroller.text,
-      username: _usernamecontroller.text,
-      phone: _phonecontroller.text,
-      file: _image!,
-    );
-    setState(() {
-      _isloading = false;
-    });
-    if (res != 'Success') {
-      showSnackBar(res, context);
+    if (_emailcontroller.text.isEmpty ||
+        _passwordcontroller.text.isEmpty ||
+        _image!.isEmpty) {
+      showSnackBar("Some fields are missing", context);
+      setState(() {
+        _isloading = false;
+      });
     } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            MobileScreenLayout: MobileScreenLayout(),
-            WebScreenLayout: WebScreenLayout(),
-          ),
-        ),
+      String res = await AuthMethods().SignUpUser(
+        email: _emailcontroller.text,
+        password: _passwordcontroller.text,
+        username: _usernamecontroller.text,
+        phone: _phonecontroller.text,
+        file: _image!,
       );
+      setState(() {
+        _isloading = false;
+      });
+      if (res != 'Success') {
+        showSnackBar(res, context);
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              MobileScreenLayout: MobileScreenLayout(),
+              WebScreenLayout: WebScreenLayout(),
+            ),
+          ),
+        );
+      }
     }
   }
 

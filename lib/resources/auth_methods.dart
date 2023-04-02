@@ -9,6 +9,18 @@ import 'package:flutter/material.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  Future<model.User> getUserdetails() async {
+    print("9");
+    User currentUser = _auth.currentUser!;
+    print("10");
+    print(currentUser);
+    print("11");
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+    print(snap.data());
+    return model.User.fromSnap(snap);
+  }
+
   //signupuser
   Future<String> SignUpUser({
     required String email,
@@ -18,12 +30,16 @@ class AuthMethods {
     required Uint8List file,
   }) async {
     String res = "Some error occured";
+    print("hello");
     try {
-      if (email.isNotEmpty ||
-          password.isNotEmpty ||
-          username.isNotEmpty ||
-          phone.isNotEmpty) {
+      print('yesi');
+      if (email.isNotEmpty &&
+          password.isNotEmpty &&
+          username.isNotEmpty &&
+          phone.isNotEmpty &&
+          file.isNotEmpty) {
         //register user
+        print("hi");
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
         print(cred.user!.uid);
@@ -31,14 +47,14 @@ class AuthMethods {
             .uploadImageToStorage('Profilepics', file, false);
         //add user to database
 
-        model.user User = model.user(
+        model.User user = model.User(
             email: email,
             phone: phone,
             photourl: photourl,
             uid: cred.user!.uid,
             username: username);
         await _firestore.collection('users').doc(cred.user!.uid).set(
-              User.toJson(),
+              user.toJson(),
             );
         res = "Success";
       }
