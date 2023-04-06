@@ -32,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<String> getUserdetails() async {
-    pp = photo;
     String uid = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance
         .collection('users')
@@ -45,11 +44,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         email = documentSnapshot.get('email');
         print("hi");
         print(photo);
+        pp = photo;
       } else {
         print("not exist");
       }
     });
     return username;
+  }
+
+  final _collectionRef = FirebaseFirestore.instance;
+
+  void logout() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    await _auth.signOut();
   }
 
   @override
@@ -90,25 +97,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 20,
               ),
 
-              CircleAvatar(
-                // child: CachedNetworkImage(
-                //   imageUrl: pp,
-                //   width: 300,
-                //   height: 300,
-                //   fit: BoxFit.cover,
-                // ),
-
-                radius: 84,
-                backgroundImage: NetworkImage(pp),
+              StreamBuilder(
+                stream: _collectionRef
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .snapshots(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.green)));
+                  } else {
+                    return Container(
+                      child: CircleAvatar(
+                        radius: 80.0,
+                        backgroundImage:
+                            NetworkImage(snapshot.data.get('photourl')),
+                      ),
+                    );
+                  }
+                },
               ),
               SizedBox(
                 height: 24,
               ),
-              Text(
-                username,
-                style: TextStyle(
-                    fontSize: 20, color: Color.fromARGB(255, 22, 22, 22)),
+              StreamBuilder(
+                stream: _collectionRef
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .snapshots(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.green)));
+                  } else {
+                    return Text(
+                      snapshot.data.get('username'),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: const Color.fromARGB(255, 22, 22, 22)),
+                    );
+                  }
+                },
               ),
+
               SizedBox(
                 height: 10,
               ),
@@ -129,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const UpdateProfileScreen()));
                   },
-                  child: const Text(
+                  child: Text(
                     "Edit Profile",
                     style: TextStyle(color: Colors.white),
                   ),
@@ -165,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 title: "Logout",
                 textcolor: Colors.red,
                 icon: LineAwesomeIcons.alternate_sign_out,
-                onPress: () {},
+                onPress: logout,
               ),
             ],
           ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cet_hostel/screens/profile/profile_screen.dart';
 import 'package:cet_hostel/utils/colors.dart';
 import 'package:cet_hostel/utils/utils.dart';
@@ -47,8 +49,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         username = documentSnapshot.get('username');
-        photo = documentSnapshot.get('photourl');
-        String pp = photo.toString();
+        String pp = documentSnapshot.get('photourl');
+        print(pp);
+        _emailcontroller.text = documentSnapshot.get('email');
+        _passwordcontroller.text = documentSnapshot.get('password');
+        _phonecontroller.text = documentSnapshot.get('phone');
+        _usernamecontroller.text = documentSnapshot.get('username');
 
         //email = documentSnapshot.get('email');
         //print("hi");
@@ -72,24 +78,49 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         _isloading = false;
       });
     } else {
-      FirebaseAuth auth = FirebaseAuth.instance;
-      User? username = auth.currentUser;
-      if (username != null) {
-        String uid = username.uid;
-        // Access the user's UID here
-      }
-      DatabaseReference userRef =
-          FirebaseDatabase.instance.ref().child("users").child(username.uid);
-      userRef.update({
+      print("_____________________");
+      // FirebaseAuth auth = FirebaseAuth.instance;
+      // User? username = auth.currentUser;
+      // if (username != null) {
+      //   String uid = username.uid;
+      //   print(uid);
+      //   // Access the user's UID here
+      //   try {
+      //     // ignore: deprecated_member_use
+      //     DatabaseReference userRef = FirebaseDatabase.instance.reference();
+      //     // DatabaseReference userRef =
+
+      //     // FirebaseDatabase.instance.ref().child('users').child(uid);
+      //     print("++++++++++++++++++++++++++++++");
+      //     userRef.child('users').child(uid).set({
+      // "username": _usernamecontroller.text,
+      // "email": _emailcontroller.text,
+      // "phone": _phonecontroller.text,
+      // "password": _passwordcontroller.text,
+      // "photourl": pp,
+      //     });
+      //   } catch (error) {
+      //     print(error);
+      //     print("error from try ctch block of update");
+      //   }
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
         "username": _usernamecontroller.text,
         "email": _emailcontroller.text,
         "phone": _phonecontroller.text,
+        "password": _passwordcontroller.text,
         "photourl": pp,
-      }).then((value) {
-        // Profile data updated successfully
-      }).catchError((error) {
-        // Error occurred while updating profile data
+      }).then((value) => {});
+
+      setState(() {
+        _isloading = false;
       });
+      showSnackBar("Updated Successfully", context);
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => ProfileScreen()));
+      Navigator.pop(
+        context,
+      );
     }
   }
 

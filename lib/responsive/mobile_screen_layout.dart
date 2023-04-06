@@ -16,7 +16,7 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  int _page = 3;
+  int _page = 0;
   late PageController pageController;
   @override
   void initState() {
