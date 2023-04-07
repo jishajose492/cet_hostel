@@ -1,6 +1,9 @@
+import 'package:cet_hostel/screens/search_menu/room_search.dart';
 import 'package:cet_hostel/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+
+String rooms = roomsearch().toString();
 
 class SearchBar extends StatefulWidget {
   @override
@@ -8,6 +11,16 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  // @override
+  // Widget build1(BuildContext context) {
+  //   return MaterialApp(
+
+  //     routes: {
+  //       '/rooms': (context) => roomsearch(),
+  //     },
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
