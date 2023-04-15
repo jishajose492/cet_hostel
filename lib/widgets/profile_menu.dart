@@ -27,6 +27,7 @@ class Profilewidget extends StatelessWidget {
         child: Icon(
           icon,
           color: Color.fromARGB(255, 8, 0, 0),
+          //color: Colors.blue,
         ),
       ),
       title: InkWell(

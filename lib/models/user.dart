@@ -37,3 +37,30 @@ class User {
     );
   }
 }
+
+class complaints {
+  final String title;
+  final String uid;
+  final String discription;
+  final String formattedDate;
+
+  final String photourl;
+
+  const complaints({
+    required this.title,
+    required this.formattedDate,
+    required this.uid,
+    required this.photourl,
+    required this.discription,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'userid': uid,
+        'discription': discription,
+        'image': photourl,
+        'rtext': "",
+        'status': "waiting for student admin",
+        'time': formattedDate
+      };
+}

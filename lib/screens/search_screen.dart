@@ -1,9 +1,11 @@
+import 'package:cet_hostel/screens/search_menu/complaint/complaint_screen.dart';
+import 'package:cet_hostel/screens/search_menu/emergency.dart';
+import 'package:cet_hostel/screens/search_menu/feedback.dart';
+import 'package:cet_hostel/screens/search_menu/menu/menu.dart';
 import 'package:cet_hostel/screens/search_menu/room_search.dart';
 import 'package:cet_hostel/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-
-String rooms = roomsearch().toString();
 
 class SearchBar extends StatefulWidget {
   @override
@@ -11,16 +13,6 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  // @override
-  // Widget build1(BuildContext context) {
-  //   return MaterialApp(
-
-  //     routes: {
-  //       '/rooms': (context) => roomsearch(),
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,16 +44,70 @@ class _SearchBarState extends State<SearchBar> {
               padding: EdgeInsets.all(16.0),
               children: <Widget>[
                 _buildMenuItem(
-                    context, 'Rooms', FontAwesome5Solid.bed, '/rooms'),
-                _buildMenuItem(context, 'Mess Menu',
-                    MaterialCommunityIcons.food_fork_drink, '/menu'),
+                  context,
+                  'Rooms',
+                  FontAwesome5Solid.bed,
+                  Colors.blue,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RoomListPage()),
+                    );
+                  },
+                ),
                 _buildMenuItem(
-                    context, 'Complaints', Icons.report_problem, '/complaints'),
+                  context,
+                  'Mess Menu',
+                  MaterialCommunityIcons.food_fork_drink,
+                  Colors.green,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MenuSelectionPage()),
+                    );
+                  },
+                ),
                 _buildMenuItem(
-                    context, 'Feedback', Icons.feedback, '/feedback'),
-                _buildMenuItem(context, 'Events', Icons.event, '/events'),
-                _buildMenuItem(context, 'Emergency Contacts',
-                    Icons.local_hospital, '/emergency'),
+                  context,
+                  'Complaints',
+                  Icons.report_problem,
+                  Colors.yellow,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ComplaintPageView()),
+                    );
+                  },
+                ),
+                _buildMenuItem(
+                  context,
+                  'Feedback',
+                  Icons.feedback,
+                  Colors.orange,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => InmateFeedbackPage()),
+                    );
+                  },
+                ),
+                // _buildMenuItem(context, 'Events', Icons.event, '/events'),
+                _buildMenuItem(
+                  context,
+                  'Emergency Contacts',
+                  Icons.local_hospital,
+                  Colors.red,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EmergencyContactsPage()),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -70,26 +116,27 @@ class _SearchBarState extends State<SearchBar> {
     );
   }
 
-  Widget _buildMenuItem(
-      BuildContext context, String title, IconData iconData, String routeName) {
+  Widget _buildMenuItem(BuildContext context, String title, IconData iconData,
+      Color backgroundColor, final VoidCallback onPressed) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, routeName);
-      },
+      onTap: onPressed,
       child: Card(
         elevation: 4.0,
+        color: backgroundColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(
               iconData,
               size: 48.0,
-              color: Color.fromARGB(255, 8, 8, 8),
+              //color: Colors.blue,
+              color: Colors.white,
+              //color: Color.fromARGB(255, 8, 8, 8),
             ),
             SizedBox(height: 8.0),
             Text(
               title,
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 18.0, color: Colors.white),
             ),
           ],
         ),

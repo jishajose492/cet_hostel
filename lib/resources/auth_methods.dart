@@ -65,6 +65,42 @@ class AuthMethods {
     return res;
   }
 
+  // complint registration
+  Future<String> complint_registration({
+    required String title,
+    required String discription,
+    required Uint8List file,
+  }) async {
+    String res = "Some error occured";
+
+    try {
+      if (title.isNotEmpty && discription.isNotEmpty && file.isNotEmpty) {
+        //register user
+        DateTime now = DateTime.now();
+        String formattedDate =
+            "${now.year}-${now.month}-${now.day}-${now.hour}-${now.minute}-${now.second}";
+        String uid = FirebaseAuth.instance.currentUser!.uid;
+        String photourl = await Storagemethods()
+            .uploadImageToStorage('complaints', file, false);
+        //add user to database
+
+        model.complaints user = model.complaints(
+            formattedDate: formattedDate,
+            title: title,
+            photourl: photourl,
+            uid: uid,
+            discription: discription);
+        await _firestore.collection('complaints').doc(formattedDate).set(
+              user.toJson(),
+            );
+        res = "Success";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
+
   //logging in user
   Future<String> loginUser(
       {required String email, required String password}) async {

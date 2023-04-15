@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cet_hostel/screens/profile/menu_preference.dart';
 import 'package:cet_hostel/screens/profile/update_profile_screen.dart';
 import 'package:cet_hostel/utils/colors.dart';
 import 'package:cet_hostel/utils/text_screen.dart';
@@ -66,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+
         // leading: IconButton(
         //   onPressed: () {},
         //   icon: const Icon(
@@ -193,8 +195,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Profilewidget(
                 title: "Menu Preference",
-                icon: Icons.menu,
-                onPress: () {},
+                icon: Icons.restaurant,
+                onPress: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MenuPreferenceScreen()));
+                },
               ),
               Profilewidget(
                 title: "Logout",

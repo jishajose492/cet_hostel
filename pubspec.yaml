@@ -37,11 +37,15 @@ dependencies:
   firebase_storage: ^11.0.14
   flutter:
     sdk: flutter
+  flutter_email_sender: ^5.2.0
   flutter_icons: ^1.1.0
   flutter_svg: ^2.0.2
+  fluttertoast: ^8.2.1
   image_picker: ^0.8.6+4
   line_awesome_flutter: ^2.0.0
+  permission_handler: ^10.2.0
   provider: ^6.0.5
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -61,6 +65,7 @@ flutter:
     - assets/images/logowt.jpg
     - assets/images/grey2.jpg
     - assets/images/pro1.jpg
+    - assets/images/cet.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
