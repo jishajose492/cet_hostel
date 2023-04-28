@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cet_hostel/screens/login_screen.dart';
 import 'package:cet_hostel/screens/profile/menu_preference.dart';
 import 'package:cet_hostel/screens/profile/update_profile_screen.dart';
 import 'package:cet_hostel/utils/colors.dart';
@@ -58,6 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void logout() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     await _auth.signOut();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (builder) => LoginScreen()));
   }
 
   @override

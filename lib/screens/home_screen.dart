@@ -62,10 +62,10 @@ class HostelHomePage extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  HostelPhotoCard(
-                    imageUrl: 'https://unsplash.com/photos/T1Yvmf4oleQ',
-                    caption: 'Hostel Exterior',
-                  ),
+                  // HostelPhotoCard(
+                  //   imageUrl: 'https://unsplash.com/photos/T1Yvmf4oleQ',
+                  //   caption: 'Hostel Exterior',
+                  // ),
                   // HostelPhotoCard(
                   //   imageUrl:
                   //       'https://images.unsplash.com/photo-1626190900453-fdb22bfed7a9',
@@ -86,41 +86,41 @@ class HostelHomePage extends StatelessWidget {
   }
 }
 
-class HostelPhotoCard extends StatelessWidget {
-  final String imageUrl;
-  final String caption;
+// class HostelPhotoCard extends StatelessWidget {
+//   final String imageUrl;
+//   final String caption;
 
-  const HostelPhotoCard(
-      {Key? key, required this.imageUrl, required this.caption})
-      : super(key: key);
+//   const HostelPhotoCard(
+//       {Key? key, required this.imageUrl, required this.caption})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(imageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              caption,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       margin: EdgeInsets.symmetric(horizontal: 10),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: <Widget>[
+//           Container(
+//             height: 150,
+//             width: 150,
+//             decoration: BoxDecoration(
+//               image: DecorationImage(
+//                 image: NetworkImage(imageUrl),
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//           ),
+//           SizedBox(height: 10),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               caption,
+//               style: TextStyle(fontWeight: FontWeight.bold),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

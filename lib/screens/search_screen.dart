@@ -1,8 +1,15 @@
 import 'package:cet_hostel/screens/search_menu/complaint/complaint_screen.dart';
 import 'package:cet_hostel/screens/search_menu/emergency.dart';
+import 'package:cet_hostel/screens/search_menu/add_events.dart';
+import 'package:cet_hostel/screens/search_menu/events.dart';
 import 'package:cet_hostel/screens/search_menu/feedback.dart';
 import 'package:cet_hostel/screens/search_menu/menu/menu.dart';
 import 'package:cet_hostel/screens/search_menu/room_search.dart';
+import 'package:cet_hostel/screens/warden/staff/staff/add_staff_screen.dart';
+
+import 'package:cet_hostel/screens/warden/staff/staff/staff_list_screen.dart';
+
+import 'package:cet_hostel/screens/search_menu/staff_anothermethod.dart';
 import 'package:cet_hostel/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -94,7 +101,19 @@ class _SearchBarState extends State<SearchBar> {
                     );
                   },
                 ),
-                // _buildMenuItem(context, 'Events', Icons.event, '/events'),
+                _buildMenuItem(
+                  context,
+                  'Events',
+                  Icons.event,
+                  Colors.pink,
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EventListScreen()),
+                    );
+                  },
+                ),
                 _buildMenuItem(
                   context,
                   'Emergency Contacts',

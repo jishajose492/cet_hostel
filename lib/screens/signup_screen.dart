@@ -61,6 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         username: _usernamecontroller.text,
         phone: _phonecontroller.text,
         file: _image!,
+        type: 'Student',
       );
       setState(() {
         _isloading = false;

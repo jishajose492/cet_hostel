@@ -7,6 +7,7 @@ class User {
   final String username;
   final String photourl;
   final String password;
+  final String type;
 
   const User({
     required this.email,
@@ -15,6 +16,7 @@ class User {
     required this.uid,
     required this.username,
     required this.password,
+    required this.type,
   });
 
   Map<String, dynamic> toJson() => {
@@ -24,6 +26,7 @@ class User {
         'email': email,
         'photourl': photourl,
         'password': password,
+        'type': type,
       };
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -34,6 +37,7 @@ class User {
       phone: snapshot['phone'],
       photourl: snapshot['photourl'],
       password: snapshot['password'],
+      type: snapshot['type'],
     );
   }
 }
@@ -62,5 +66,84 @@ class complaints {
         'rtext': "",
         'status': "waiting for student admin",
         'time': formattedDate
+      };
+}
+
+class notification {
+  final String text;
+  final String formattedDate;
+  final String duedate;
+  final String duetime;
+  final String selectedtype;
+
+  const notification({
+    required this.text,
+    required this.formattedDate,
+    required this.duedate,
+    required this.duetime,
+    required this.selectedtype,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+        'time': formattedDate,
+        'duedate': duedate,
+        'duetime': duetime,
+        'selectedtype': selectedtype,
+      };
+}
+
+class rules {
+  final String text;
+  final String formattedDate;
+
+  const rules({
+    required this.text,
+    required this.formattedDate,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+        'time': formattedDate,
+      };
+}
+
+class penalty {
+  final String text;
+  final String formattedDate;
+
+  const penalty({
+    required this.text,
+    required this.formattedDate,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+        'time': formattedDate,
+      };
+}
+
+class room {
+  final String id;
+  final String corry;
+  final String floor;
+
+  const room({
+    required this.id,
+    required this.corry,
+    required this.floor,
+  });
+
+  Map<String, dynamic> toJson() => {
+        'roomid': id,
+        'corry': corry,
+        'floor': floor,
+        'vaccency': "4",
+        'memeber1': "",
+        'memeber2': "",
+        'memeber3': "",
+        'memeber4': "",
+        'vaccency': '4',
+        'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
       };
 }

@@ -2,6 +2,7 @@ import 'package:cet_hostel/providers/user_provider.dart';
 import 'package:cet_hostel/responsive/mobile_screen_layout.dart';
 import 'package:cet_hostel/responsive/responsive_layout_screen.dart';
 import 'package:cet_hostel/responsive/web_screen_layout.dart';
+import 'package:cet_hostel/screens/hostel_staff/home.dart';
 import 'package:cet_hostel/screens/login_screen.dart';
 import 'package:cet_hostel/screens/signup_screen.dart';
 import 'package:cet_hostel/utils/colors.dart';
@@ -54,10 +55,11 @@ class MyApp extends StatelessWidget {
               print('snapshot.connectionState == ConnectionState.active');
               if (snapshot.hasData) {
                 print('mobile');
-                return const ResponsiveLayout(
-                  MobileScreenLayout: MobileScreenLayout(),
-                  WebScreenLayout: WebScreenLayout(),
-                );
+                return HomePageforstaff();
+                // return const ResponsiveLayout(
+                //   MobileScreenLayout: MobileScreenLayout(),
+                //   WebScreenLayout: WebScreenLayout(),
+                // );
               } else if (snapshot.hasError) {
                 print('error');
                 return Center(
