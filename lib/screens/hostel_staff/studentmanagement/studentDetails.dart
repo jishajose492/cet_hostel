@@ -22,8 +22,13 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Student Profile'),
+        backgroundColor: Colors.white,
+        title: Text(
+          'Student Profile',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: _db.collection('users').doc(widget.uid).snapshots(),

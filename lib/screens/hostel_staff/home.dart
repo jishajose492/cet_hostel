@@ -1,10 +1,12 @@
 import 'package:cet_hostel/screens/hostel_staff/complaints/complints.dart';
 import 'package:cet_hostel/screens/hostel_staff/hostallallocation/hostallAloocation.dart';
-import 'package:cet_hostel/screens/hostel_staff/messbill/messbill_home.dart';
+import 'package:cet_hostel/screens/hostel_staff/messbill/messbill2.dart';
+
 import 'package:cet_hostel/screens/hostel_staff/room/room_home.dart';
 
 import 'package:cet_hostel/screens/hostel_staff/studentmanagement/studentMnagementHome.dart';
 import 'package:cet_hostel/screens/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +57,11 @@ class _HomePageforstaffState extends State<HomePageforstaff> {
   navigate_to_mess_bill() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => messbill()),
+      MaterialPageRoute(
+        builder: (context) =>
+            //  MessBill()
+            mess(),
+      ),
     );
   }
 
@@ -83,6 +89,13 @@ class _HomePageforstaffState extends State<HomePageforstaff> {
       context,
       MaterialPageRoute(builder: (context) => ComplaintPage()),
     );
+  }
+
+  Future<String> getUsername(String userId) async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    final data = snapshot.data();
+    return data?['username'] ?? '';
   }
 
   @override
