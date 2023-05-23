@@ -44,8 +44,13 @@ class _aloottedroomsState extends State<aloottedrooms> {
       debugShowCheckedModeBanner: false,
       title: 'Names List',
       home: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text('List of Rooms'),
+            backgroundColor: Colors.white,
+            title: Text(
+              'List of Rooms',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
           body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance

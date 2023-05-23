@@ -5,6 +5,7 @@ import 'package:cet_hostel/responsive/web_screen_layout.dart';
 import 'package:cet_hostel/screens/hostel_staff/home.dart';
 import 'package:cet_hostel/screens/login_screen.dart';
 import 'package:cet_hostel/screens/signup_screen.dart';
+import 'package:cet_hostel/test.dart';
 import 'package:cet_hostel/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +38,7 @@ void main() async {
   //   ),
   // );
   Stripe.publishableKey = stripePublishableKey;
-  await Stripe.instance.applySettings();
+
   runApp(const MyApp());
 }
 
@@ -66,11 +67,11 @@ class MyApp extends StatelessWidget {
               print('snapshot.connectionState == ConnectionState.active');
               if (snapshot.hasData) {
                 print('mobile');
-                return HomePageforstaff();
-                // return const ResponsiveLayout(
-                //   MobileScreenLayout: MobileScreenLayout(),
-                //   WebScreenLayout: WebScreenLayout(),
-                // );
+                // return HomePageforstaff();
+                return const ResponsiveLayout(
+                  MobileScreenLayout: MobileScreenLayout(),
+                  WebScreenLayout: WebScreenLayout(),
+                );
               } else if (snapshot.hasError) {
                 print('error');
                 return Center(
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
                 ),
               );
             }
-
+            // return MyDropdown();
             return const LoginScreen();
           },
         ),

@@ -1,12 +1,14 @@
-import 'package:cet_hostel/screens/profile/update_profile_screen.dart';
+import 'package:cet_hostel/screens/student/profile/update_profile_screen.dart';
 import 'package:cet_hostel/screens/warden/complaints/complaints.dart';
 
 import 'package:cet_hostel/screens/warden/notification/notification.dart';
 import 'package:cet_hostel/screens/warden/rules.dart';
+import 'package:cet_hostel/screens/warden/security.dart';
 import 'package:cet_hostel/screens/warden/staff/staff/staff_list_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../hostel_staff/studentmanagement/studentMnagementHome.dart';
 import '../login_screen.dart';
 
 class HomePageforwarden extends StatefulWidget {
@@ -84,7 +86,10 @@ class _HomePageforwardenState extends State<HomePageforwarden> {
                 title: 'Student Management',
                 icon: Icons.person,
                 color: Colors.blue,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => studentManagement()));
+                },
               ),
               HomeItem(
                 title: 'Staff Management',
@@ -100,7 +105,8 @@ class _HomePageforwardenState extends State<HomePageforwarden> {
                 icon: Icons.security_outlined,
                 color: Colors.redAccent,
                 onTap: () {
-                  // Add navigation logic here
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => SecurityStaffPage()));
                 },
               ),
               HomeItem(

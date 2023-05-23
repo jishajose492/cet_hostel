@@ -1,9 +1,5 @@
-import 'package:cet_hostel/screens/student_admin/mainhome.dart';
-import 'package:cet_hostel/screens/student_admin/menu/menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import 'EditMenuItemScreen.dart';
 
 String items = "";
 
@@ -13,9 +9,17 @@ class vegmenu extends StatefulWidget {
 }
 
 class _vegmenuState extends State<vegmenu> {
-  final List<String> daysOfWeek = ['sunday'];
+  final List<String> daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
 
-  final List<String> meals = ['morning', 'noon', 'night'];
+  final List<String> meals = ['Breakfast', 'Lunch', 'Snacks', 'Dinner'];
   Widget myCustomWidget(meal, day) {
     return FutureBuilder<DocumentSnapshot>(
       future: FirebaseFirestore.instance
@@ -30,7 +34,10 @@ class _vegmenuState extends State<vegmenu> {
           String m = snapshot.data!.get(meal);
           items = m;
 
-          return Text(m);
+          return Text(
+            m,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+          );
         } else {
           return Text('Loading...');
         }
@@ -63,12 +70,15 @@ class _vegmenuState extends State<vegmenu> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage(bar: 1)))
-                .then((result) {
-              // Handle the result returned from PageB
-            });
-            // Add your navigation logic here
+            // Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => HomePage(bar: 1)))
+            //     .then((result) {
+            //   // Handle the result returned from PageB
+            // });
+            // // Add your navigation logic here
+            Navigator.pop(
+              context,
+            );
           },
         ), // Set the background color to white
         bottom: PreferredSize(
@@ -99,7 +109,7 @@ class _vegmenuState extends State<vegmenu> {
                   daysOfWeek[index],
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
+                    fontSize: 24.0,
                   ),
                 ),
               ),
@@ -111,26 +121,34 @@ class _vegmenuState extends State<vegmenu> {
                   String day = daysOfWeek[index];
                   print(day);
                   return ListTile(
-                    leading: Icon(Icons.restaurant),
-                    title: Text(meal),
+                    leading: Icon(
+                      Icons.restaurant,
+                      size: 30,
+                      color: Color.fromARGB(255, 68, 68, 68),
+                    ),
+                    title: Text(
+                      meal,
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+                    ),
                     subtitle: myCustomWidget(
                       meal,
                       day,
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EditMenuItemScreen(
-                                    time: meal,
-                                    day: day,
-                                    type: 'veg'))).then((result) {
-                          // Handle the result returned from PageB
-                        });
-                      },
-                    ),
+                    // trailing: IconButton(
+                    //   icon: Icon(Icons.edit),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => EditMenuItemScreen(
+                    //                 time: meal,
+                    //                 day: day,
+                    //                 type: 'veg'))).then((result) {
+                    //       // Handle the result returned from PageB
+                    //     });
+                    //   },
+                    // ),
                   );
                 }).toList(),
               ),

@@ -1,6 +1,6 @@
-import 'package:cet_hostel/screens/hostel_staff/messbill/card_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,7 +21,8 @@ class _MessBillDetailsScreenState extends State<MessBillDetailsScreen> {
   int _totalMessWages = 386;
   int _totalRent = 310;
   int _totalmesscharges = 0;
-
+  int _total = 0;
+  Map<String, dynamic>? paymentIntent;
   @override
   void initState() {
     super.initState();
@@ -30,85 +31,137 @@ class _MessBillDetailsScreenState extends State<MessBillDetailsScreen> {
   }
 
   Future<void> _getArrayLength() async {
-    final length = await getAttendanceLength(widget.roomid, widget.uid);
-    setState(() {
-      _totalAttendence = length;
-      _totalmesscharges = _totalAttendence * 120;
-    });
+    final length = await getAttendanceCountByMonth(widget.roomid, widget.uid);
+    // print(length);
+    // setState(() {
+    //   _totalAttendence = length ;
+    //   _totalmesscharges = _totalAttendence * 120;
+    //   _total = _totalRent + _totalMessWages + _totalmesscharges;
+    // });
   }
 
-  Future<int> getAttendanceLength(String roomId, String uid) async {
+  Future<Map<String, int>> getAttendanceCountByMonth(
+      String roomId, String uid) async {
     final docSnapshot = await FirebaseFirestore.instance
         .collection('Rooms')
-        .doc(widget.roomid)
+        .doc(roomId)
         .collection('attendence')
-        .doc(widget.uid)
+        .doc(uid)
         .get();
 
     final dataArray = docSnapshot.data()?['precents'] as List<dynamic>?;
-    return dataArray?.length ?? 0;
+    print("hhohoi");
+    print(dataArray);
+
+    // Create a map to store the attendance count for each month
+    final attendanceCountByMonth = <String, int>{};
+
+    if (dataArray != null) {
+      for (var attendanceDate in dataArray) {
+        // Extract the month and year from the attendance date
+        final attendanceMonth = DateTime.parse(attendanceDate).month.toString();
+        final attendanceYear = DateTime.parse(attendanceDate).year.toString();
+        final monthYear = '$attendanceMonth-$attendanceYear';
+
+        // Update the attendance count for the corresponding month
+        if (attendanceCountByMonth.containsKey(monthYear)) {
+          attendanceCountByMonth[monthYear] =
+              attendanceCountByMonth[monthYear]! + 1;
+        } else {
+          attendanceCountByMonth[monthYear] = 1;
+        }
+      }
+    }
+    print(attendanceCountByMonth);
+    return attendanceCountByMonth;
   }
 
-  // Future<void> _payMessBill() async {
-  //   try {
-  //     final paymentMethod = await StripePayment.paymentRequestWithCardForm(
-  //       CardFormPaymentRequest(),
-  //     );
+  Future<void> _payMessBill() async {
+    try {
+      paymentIntent = await createPaymentIntent('$_total', 'INR');
 
-  //     final paymentIntent = await _createPaymentIntent(paymentMethod);
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  paymentIntentClientSecret: paymentIntent!['client_secret'],
+                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92'),
+                  // googlePay: const PaymentSheetGooglePay(testEnv: true,currencyCode: "US",merchantCountryCode: merchantCountryCode)
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'Adnan'))
+          .then((value) {});
 
-  //     await StripePayment.confirmPaymentIntent(
-  //       PaymentIntent(
-  //         clientSecret: paymentIntent['client_secret'],
-  //         paymentMethodId: paymentMethod.id,
-  //       ),
-  //     );
+      displayPaymentSheet();
+    } catch (e, s) {
+      print('exception:$e$s');
+    }
+  }
 
-  //     // Payment successful, update the UI or database accordingly
-  //   } catch (e) {
-  //     // Payment failed, handle the error
-  //   }
-  // }
+  displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                          ),
+                          Text("Payment Successfull"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+        paymentIntent = null;
+      }).onError((error, stackTrace) {
+        print('Error is :---->$error$stackTrace');
+      });
+    } on StripeException catch (e) {
+      print('Error is :--->$e');
+      showDialog(
+          context: context,
+          builder: (_) => const AlertDialog(
+                content: Text("Cancelled"),
+              ));
+    } catch (e) {
+      print('$e');
+    }
+  }
 
-  // Future<Map<String, dynamic>> _createPaymentIntent(
-  //     PaymentMethod paymentMethod) async {
-  //   final url = Uri.parse('https://your-server.com/create-payment-intent');
-  //   final response = await http.post(url, body: {
-  //     'amount': '1000', // replace with the actual amount
-  //     'currency': 'usd',
-  //     'payment_method': paymentMethod.id,
-  //   });
+  // Future<Map<String, dynamic>>
+  createPaymentIntent(String amount, String currency) async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card',
+      };
 
-  //   return jsonDecode(response.body);
-  // }
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization':
+              'Bearer sk_test_51N6DkOSHIWQ65VmROvdugOgAlaJCMQU8Ft3OwVl2B2c9pvvxv7KtOTRnUYwrZFymJdgxjfgJXl2kMgpt8JZCurGF00acXUs9mT',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
+      print('Payment Intent Body->>> ${response.body.toString()}');
+      return jsonDecode(response.body);
+    } catch (err) {
+      print('err charging user: ${err.toString()}');
+    }
+  }
 
-  // void _calculateMessBill() async {
-  //   FirebaseFirestore.instance.collection('Rooms').get().then((roomDocs) {
-  //     roomDocs.docs.forEach((roomDoc) {
-  //       final room = roomDoc.data();
-  //       final roomId = room['roomid'];
-
-  //       FirebaseFirestore.instance
-  //           .collection('attendence')
-  //           .doc('id')
-  //           .get()
-  //           .then((attendenceDoc) {
-  //         print(attendenceDoc.data());
-  //         if (attendenceDoc.exists) {
-  //           final attendence = attendenceDoc.data();
-
-  //           _totalAttendence = (attendence?['precents'] as List<dynamic>)
-  //               .where((element) => element == true)
-  //               .length;
-  //           print("raees testing");
-  //           print(_totalAttendence);
-
-  //           int _totalmesscharges = _totalAttendence * 120;
-  //         }
-  //       });
-  //     });
-  //   });
-  // }
+  calculateAmount(String amount) {
+    final calculatedAmout = (int.parse(amount)) * 100;
+    return calculatedAmout.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,24 +243,16 @@ class _MessBillDetailsScreenState extends State<MessBillDetailsScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  'TOTAL: ${_totalRent + _totalMessWages + _totalmesscharges}',
+                  'TOTAL: $_total',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
               SizedBox(height: 32.0),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => card_form(),
-                      ),
-                    );
+                  onPressed: () async {
+                    await _payMessBill();
                   },
-                  // () async {
-                  //   await _payMessBill();
-                  // },
                   child: Text('Pay Mess Bill'),
                 ),
               ),

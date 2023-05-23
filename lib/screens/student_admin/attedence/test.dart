@@ -79,8 +79,8 @@ class _MyState extends State<My> {
 
     DateTime currentDate = DateTime.now();
     String year = currentDate.year.toString();
-    String month = currentDate.month.toString();
-    String day = currentDate.day.toString();
+    String month = currentDate.month.toString().padLeft(2, '0');
+    String day = currentDate.day.toString().padLeft(2, '0');
     attendanceRef.doc(id).get().then((doc) {
       if (doc.exists) {
         array = (doc.data() as Map<String, dynamic>)['precents'];
@@ -503,8 +503,9 @@ class _MyState extends State<My> {
                       onTap: () async {
                         DateTime currentDate = DateTime.now();
                         String year = currentDate.year.toString();
-                        String month = currentDate.month.toString();
-                        String day = currentDate.day.toString();
+                        String month =
+                            currentDate.month.toString().padLeft(2, '0');
+                        String day = currentDate.day.toString().padLeft(2, '0');
 
                         if (_isChecked1) {
                           print('Current date: $day/$month/$year');

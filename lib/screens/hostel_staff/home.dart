@@ -1,3 +1,4 @@
+import 'package:cet_hostel/screens/hostel_staff/attedence/home.dart';
 import 'package:cet_hostel/screens/hostel_staff/complaints/complints.dart';
 import 'package:cet_hostel/screens/hostel_staff/hostallallocation/hostallAloocation.dart';
 import 'package:cet_hostel/screens/hostel_staff/messbill/messbill2.dart';
@@ -23,6 +24,13 @@ class _HomePageforstaffState extends State<HomePageforstaff> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => studentManagement()),
+    );
+  }
+
+  navigate_to_attendence() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ViewAllRooms()),
     );
   }
 
@@ -74,12 +82,13 @@ class _HomePageforstaffState extends State<HomePageforstaff> {
       context,
       MaterialPageRoute(
           builder: (context) => ProfilePage(
-                email: "wdhuqdhuw",
-                phoneNumber: "827318748248",
+                email: "staff@gmail.com",
+                phoneNumber: "9497321481",
                 // position: "hwhjdsddD",
-                name: "RAEES",
-                profileImageUrl:
-                    "https://firebasestorage.googleapis.com/v0/b/cethostel-f837e.appspot.com/o/Profilepics%2FEnoyUVco5wYye2IfB2zQqKSgf382?alt=media&token=f35f439a-f005-450b-aa8e-bf25fba1727d",
+                name: "STAFF",
+                profileImageUrl: "assets/images/warden.jpg",
+
+                //"https://firebasestorage.googleapis.com/v0/b/cethostel-f837e.appspot.com/o/Profilepics%2FEnoyUVco5wYye2IfB2zQqKSgf382?alt=media&token=f35f439a-f005-450b-aa8e-bf25fba1727d",
               )),
     );
   }
@@ -145,7 +154,7 @@ class _HomePageforstaffState extends State<HomePageforstaff> {
                     'Attendance Management',
                     Icons.event_available_outlined,
                     Colors.purple,
-                    'navigate_txo_complaint',
+                    'navigate_to_attendence',
                   ),
                 ],
               ),
@@ -259,6 +268,9 @@ class _HomePageforstaffState extends State<HomePageforstaff> {
             navigate_to_g();
           } else if (fun == 'studentManagement') {
             navigate_to_studentManagement();
+          }
+          if (fun == 'navigate_to_attendence') {
+            navigate_to_attendence();
           }
           if (fun == 'ComplaintPage') {
             navigate_to_ComplaintPage();

@@ -1,5 +1,5 @@
 import 'package:cet_hostel/screens/hostel_staff/room/crete_room.dart';
-import 'package:cet_hostel/screens/hostel_staff/room/viewAllRoom.dart';
+import 'package:cet_hostel/screens/student/search_menu/viewAllRoom.dart';
 import 'package:cet_hostel/screens/student_admin/menu/nonvegmenu.dart';
 import 'package:cet_hostel/screens/student_admin/menu/vegmenu.dart';
 import 'package:flutter/material.dart';

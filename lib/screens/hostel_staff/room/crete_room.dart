@@ -91,10 +91,15 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Create Room'),
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          'Create Room',
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

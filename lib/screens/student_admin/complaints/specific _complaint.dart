@@ -165,7 +165,7 @@ class _specific_complaintState extends State<specific_complaint> {
                 // Update the document
                 try {
                   await docRef.update({
-                    'status': 'Delete complaint',
+                    'status': 'Complaint Rejected',
                   });
                 } catch (e) {
                   print(e);
@@ -194,7 +194,7 @@ class _specific_complaintState extends State<specific_complaint> {
                 ),
                 child: Center(
                     child: Text(
-                  "Delete complaint",
+                  "Complaint Rejected",
                   style: TextStyle(color: Colors.white),
                 )),
               ),

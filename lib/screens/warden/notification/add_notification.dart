@@ -110,7 +110,7 @@ class _addnotificationState extends State<addnotification> {
         ),
         // Add other AppBar properties here
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,

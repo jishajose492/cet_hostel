@@ -1,3 +1,4 @@
+// import 'package:cet_hostel/screens/warden/staff/staff/add_staff_screen.dart';
 import 'package:cet_hostel/screens/warden/staff/staff/add_staff_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,8 +7,14 @@ class HostelStaffListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Hostel Staff'),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(
+          'Hostel Staff',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream:
@@ -22,17 +29,51 @@ class HostelStaffListScreen extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               DocumentSnapshot doc = snapshot.data!.docs[index];
 
-              return ListTile(
-                title: Text(doc['name']),
-                subtitle: Text(doc['role']),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    FirebaseFirestore.instance
-                        .collection('hostel_staff')
-                        .doc(doc.id)
-                        .delete();
-                  },
+              return Card(
+                elevation: 2,
+                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: ListTile(
+                  title: Text(
+                    doc['name'],
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10),
+                      Text(
+                        doc['role'],
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        doc['contact'],
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                    ],
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    color: Colors.red,
+                    onPressed: () {
+                      FirebaseFirestore.instance
+                          .collection('hostel_staff')
+                          .doc(doc.id)
+                          .delete();
+                    },
+                  ),
                 ),
               );
             },
@@ -41,10 +82,13 @@ class HostelStaffListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => StaffDetailsScreen()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StaffDetailsScreen()),
+          );
         },
         child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
     );
   }

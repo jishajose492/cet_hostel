@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cached_network_image: ^3.2.3
+  carousel_slider: ^4.2.0
   cloud_firestore: ^4.4.3
   cupertino_icons: ^1.0.5
   email_validator: ^2.1.17
@@ -44,6 +45,7 @@ dependencies:
   flutter_stripe: ^9.2.0
   flutter_svg: ^2.0.2
   fluttertoast: ^8.2.1
+  font_awesome_flutter: ^10.4.0
   http: ^0.13.6
   image_picker: ^0.8.6+4
   line_awesome_flutter: ^2.0.0
@@ -52,6 +54,7 @@ dependencies:
   provider: ^6.0.5
   url_launcher: ^6.1.10
   uuid: ^3.0.7
+  video_player: ^2.6.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -73,6 +76,14 @@ flutter:
     - assets/images/pro1.jpg
     - assets/images/cet.jpg
     - assets/images/app_icon.jpg
+    - assets/images/img1.jpg
+    - assets/images/h1.jpg
+    - assets/images/h3.jpg
+    - assets/images/h2.jpg
+    - assets/images/h4.jpg
+    - assets/images/img2.jpg
+    - assets/images/warden.jpg
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

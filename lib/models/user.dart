@@ -6,18 +6,21 @@ class User {
   final String phone;
   final String username;
   final String photourl;
-  final String password;
-  final String type;
+  final String district;
+  final String income;
+  final String status;
+  final String totel;
 
-  const User({
-    required this.email,
-    required this.phone,
-    required this.photourl,
-    required this.uid,
-    required this.username,
-    required this.password,
-    required this.type,
-  });
+  const User(
+      {required this.email,
+      required this.phone,
+      required this.photourl,
+      required this.uid,
+      required this.username,
+      required this.district,
+      required this.income,
+      required this.status,
+      required this.totel});
 
   Map<String, dynamic> toJson() => {
         'username': username,
@@ -25,22 +28,128 @@ class User {
         'phone': phone,
         'email': email,
         'photourl': photourl,
-        'password': password,
-        'type': type,
+        'roomid': "",
+        'district': district,
+        'income': income,
+        'status': status,
+        'totel': totel,
       };
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
     return User(
-      username: snapshot['username'],
-      uid: snapshot['uid'],
-      email: snapshot['email'],
-      phone: snapshot['phone'],
-      photourl: snapshot['photourl'],
-      password: snapshot['password'],
-      type: snapshot['type'],
-    );
+        username: snapshot['username'],
+        uid: snapshot['uid'],
+        email: snapshot['email'],
+        phone: snapshot['phone'],
+        photourl: snapshot['photourl'],
+        district: snapshot['district'],
+        income: snapshot['income'],
+        status: snapshot['status'],
+        totel: snapshot['totel']);
   }
 }
+
+// class User {
+//   final String email;
+//   final String uid;
+//   final String phone;
+//   final String username;
+//   final String photourl;
+//   final String password;
+//   final String type;
+
+//   const User({
+//     required this.email,
+//     required this.phone,
+//     required this.photourl,
+//     required this.uid,
+//     required this.username,
+//     required this.password,
+//     required this.type,
+//   });
+
+//   Map<String, dynamic> toJson() => {
+//         'username': username,
+//         'uid': uid,
+//         'phone': phone,
+//         'email': email,
+//         'photourl': photourl,
+//         'password': password,
+//         'type': type,
+//       };
+//   static User fromSnap(DocumentSnapshot snap) {
+//     var snapshot = snap.data() as Map<String, dynamic>;
+//     return User(
+//       username: snapshot['username'],
+//       uid: snapshot['uid'],
+//       email: snapshot['email'],
+//       phone: snapshot['phone'],
+//       photourl: snapshot['photourl'],
+//       password: snapshot['password'],
+//       type: snapshot['type'],
+//     );
+//   }
+// }
+// class User {
+//   final String email;
+//   final String uid;
+//   final String phone;
+//   final String type;
+//   final String username;
+//   final String photourl;
+//   final String password;
+//   final String district;
+//   final String pl;
+
+//   final String income;
+//   final String status;
+//   final String totel;
+
+//   const User(
+//       {required this.email,
+//       required this.phone,
+//       required this.photourl,
+//       required this.password,
+//       required this.uid,
+//       required this.username,
+//       required this.district,
+//       required this.pl,
+//       required this.income,
+//       required this.status,
+//       required this.totel,
+//       required this.type});
+
+//   Map<String, dynamic> toJson() => {
+//         'username': username,
+//         'uid': uid,
+//         'phone': phone,
+//         'email': email,
+//         'photourl': photourl,
+//         'password': password,
+//         'roomid': "",
+//         'pl': pl,
+//         'district': district,
+//         'income': income,
+//         'status': status,
+//         'totel': totel,
+//       };
+//   static User fromSnap(DocumentSnapshot snap) {
+//     var snapshot = snap.data() as Map<String, dynamic>;
+//     return User(
+//         username: snapshot['username'],
+//         uid: snapshot['uid'],
+//         email: snapshot['email'],
+//         phone: snapshot['phone'],
+//         photourl: snapshot['photourl'],
+//         type: snapshot['type'],
+//         password: snapshot['password'],
+//         district: snapshot['district'],
+//         pl: snapshot['pl'],
+//         income: snapshot['income'],
+//         status: snapshot['status'],
+//         totel: snapshot['totel']);
+//   }
+// }
 
 class complaints {
   final String title;

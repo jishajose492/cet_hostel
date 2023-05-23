@@ -22,27 +22,29 @@ class AuthMethods {
     return model.User.fromSnap(snap);
   }
 
-  //signupuser
-
   Future<String> SignUpUser({
     required String email,
     required String password,
     required String username,
     required String phone,
     required Uint8List file,
-    required String type,
+    required String district,
+    required String income,
+    required String totel,
   }) async {
     String res = "Some error occured";
-    print("hello");
+    // print("hello");
     try {
-      print('yesi');
+      // print('yesi');
       if (email.isNotEmpty &&
           password.isNotEmpty &&
           username.isNotEmpty &&
           phone.isNotEmpty &&
-          file.isNotEmpty) {
+          file.isNotEmpty &&
+          district.isNotEmpty &&
+          income.isNotEmpty) {
         //register user
-        print("hi");
+        // print("hi");
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
         print(cred.user!.uid);
@@ -51,14 +53,17 @@ class AuthMethods {
         //add user to database
 
         model.User user = model.User(
-            email: email,
-            phone: phone,
-            photourl: photourl,
-            password: password,
-            uid: cred.user!.uid,
-            username: username,
-            type: type);
-        await _firestore.collection('users').doc(cred.user!.uid).set(
+          email: email,
+          phone: phone,
+          photourl: photourl,
+          uid: cred.user!.uid,
+          username: username,
+          district: district,
+          income: income,
+          status: 'Applied For Hostal',
+          totel: totel,
+        );
+        await _firestore.collection('usersnew').doc(cred.user!.uid).set(
               user.toJson(),
             );
         res = "Success";
@@ -68,6 +73,109 @@ class AuthMethods {
     }
     return res;
   }
+  //signupuser
+
+  // Future<String> SignUpUser({
+  //   required String email,
+  //   required String password,
+  //   required String username,
+  //   required String phone,
+  //   required Uint8List file,
+  //   required String type,
+  // }) async {
+  //   String res = "Some error occured";
+  //   print("hello");
+  //   try {
+  //     print('yesi');
+  //     if (email.isNotEmpty &&
+  //         password.isNotEmpty &&
+  //         username.isNotEmpty &&
+  //         phone.isNotEmpty &&
+  //         file.isNotEmpty) {
+  //       register user
+  //       print("hi");
+  //       UserCredential cred = await _auth.createUserWithEmailAndPassword(
+  //           email: email, password: password);
+  //       print(cred.user!.uid);
+  //       String photourl = await Storagemethods()
+  //           .uploadImageToStorage('Profilepics', file, false);
+  //       add user to database
+
+  //       model.User user = model.User(
+  //           email: email,
+  //           phone: phone,
+  //           photourl: photourl,
+  //           password: password,
+  //           uid: cred.user!.uid,
+  //           username: username,
+  //           type: type);
+  //       await _firestore.collection('users').doc(cred.user!.uid).set(
+  //             user.toJson(),
+  //           );
+  //       res = "Success";
+  //     }
+  //   } catch (err) {
+  //     res = err.toString();
+  //   }
+  //   return res;
+  // }
+  // Future<String> SignUpUser({
+  //   required String email,
+  //   required String password,
+  //   required String username,
+  //   required String phone,
+  //   required String type,
+  //   required Uint8List file,
+  //   required String district,
+  //   required String pl,
+  //   required String income,
+  //   required String totel,
+  // }) async {
+  //   String res = "Some error occured";
+  //   // print("hello");
+  //   try {
+  //     // print('yesi');
+  //     if (email.isNotEmpty &&
+  //         password.isNotEmpty &&
+  //         username.isNotEmpty &&
+  //         phone.isNotEmpty &&
+  //         file.isNotEmpty &&
+  //         district.isNotEmpty &&
+  //         pl.isNotEmpty &&
+  //         income.isNotEmpty) {
+  //       //register user
+  //       // print("hi");
+  //       UserCredential cred = await _auth.createUserWithEmailAndPassword(
+  //           email: email, password: password);
+  //       print(cred.user!.uid);
+  //       String photourl = await Storagemethods()
+  //           .uploadImageToStorage('Profilepics', file, false);
+  //       //add user to database
+
+  //       model.User user = model.User(
+  //         email: email,
+  //         phone: phone,
+  //         photourl: photourl,
+  //         type: type,
+  //         password: password,
+  //         uid: cred.user!.uid,
+  //         username: username,
+  //         district: district,
+  //         pl: pl,
+  //         income: income,
+  //         status: 'Applied For Hostal',
+  //         totel: totel,
+  //       );
+  //       await _firestore.collection('users').doc(cred.user!.uid).set(
+  //             user.toJson(),
+  //           );
+  //       res = "Success";
+  //     }
+  //   } catch (err) {
+  //     res = err.toString();
+  //   }
+  //   return res;
+  // }
 
   Future<String> savepenalty({
     required String text,

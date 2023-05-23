@@ -16,9 +16,14 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Profile'),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -54,21 +59,14 @@ class ProfilePage extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Text(
-              name,
+              "Staff",
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
-            SizedBox(height: 8),
-            Text(
-              'Software Developer',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey[600],
-              ),
-            ),
+
             SizedBox(height: 16),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -127,29 +125,6 @@ class ProfilePage extends StatelessWidget {
                     ),
                     title: Text(
                       'Phone Number',
-                      style: TextStyle(
-                        color: Colors.grey[800],
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    subtitle: Text(
-                      phoneNumber,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    thickness: 1,
-                    color: Colors.grey[300],
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.message,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-                    title: Text(
-                      'Whatsapp Number',
                       style: TextStyle(
                         color: Colors.grey[800],
                         fontWeight: FontWeight.bold,

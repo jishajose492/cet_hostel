@@ -223,7 +223,7 @@ class _ViewAllRoomsState extends State<ViewAllRooms> {
         .doc('02')
         .collection("attendence")
         .get();
-    print("raees");
+
     print(snapshot.size);
     if (snapshot.size == 4) {
       col4 = true;
@@ -269,6 +269,7 @@ class _ViewAllRoomsState extends State<ViewAllRooms> {
       title: 'Names List',
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           actions: [
             IconButton(
               color: Colors.red,
@@ -276,7 +277,10 @@ class _ViewAllRoomsState extends State<ViewAllRooms> {
               icon: Icon(Icons.logout),
             )
           ],
-          title: Text('List of Rooms'),
+          title: Text(
+            'List of Rooms',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('Rooms').snapshots(),
