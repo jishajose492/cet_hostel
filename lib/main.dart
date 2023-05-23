@@ -11,6 +11,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:cet_hostel/screens/.env';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,15 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
+  // StripePayment.setOptions(
+  //   StripeOptions(
+  //     publishableKey:
+  //         'pk_test_51N6DkOSHIWQ65VmRgEPdF7BKyf9b4u470HhsgvkagPYa42kI8VL7JCLDriJj99gJHsZo7j6RDVAFVP57CMOAQvJk00tFJBxrEO',
+  //     androidPayMode: 'test',
+  //   ),
+  // );
+  Stripe.publishableKey = stripePublishableKey;
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 

@@ -62,7 +62,7 @@ class _messState extends State<mess> {
                         ),
                       ),
                     ),
-                    if (userData['memeber1'] != null)
+                    if (userData['memeber1'] != '')
                       ListTile(
                         leading: Icon(
                           Icons.person,
@@ -93,7 +93,8 @@ class _messState extends State<mess> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => MessBillDetailsScreen(
-                                      uid: userData['memeber1'],
+                                      uid: userData['uid'],
+                                      roomid: userData['roomid'],
                                     ),
                                   ),
                                 );
@@ -103,7 +104,7 @@ class _messState extends State<mess> {
                           },
                         ),
                       ),
-                    if (userData['memeber2'] != null)
+                    if (userData['memeber2'] != '')
                       ListTile(
                         leading: Icon(
                           Icons.person,
@@ -135,7 +136,8 @@ class _messState extends State<mess> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => MessBillDetailsScreen(
-                                      uid: userData['memeber2'],
+                                      uid: userData['uid'],
+                                      roomid: userData['roomid'],
                                     ),
                                   ),
                                 );
@@ -145,7 +147,7 @@ class _messState extends State<mess> {
                           },
                         ),
                       ),
-                    if (userData['memeber3'] != null)
+                    if (userData['memeber3'] != '')
                       ListTile(
                         leading: Icon(
                           Icons.person,
@@ -177,7 +179,8 @@ class _messState extends State<mess> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => MessBillDetailsScreen(
-                                      uid: userData['memeber3'],
+                                      uid: userData['uid'],
+                                      roomid: userData['roomid'],
                                     ),
                                   ),
                                 );
@@ -187,7 +190,7 @@ class _messState extends State<mess> {
                           },
                         ),
                       ),
-                    if (userData['memeber4'] != null)
+                    if (userData['memeber4'] != '')
                       ListTile(
                         leading: Icon(
                           Icons.person,
@@ -220,7 +223,8 @@ class _messState extends State<mess> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           MessBillDetailsScreen(
-                                            uid: userData['memeber4'],
+                                            uid: userData['uid'],
+                                            roomid: userData['roomid'],
                                           )),
                                 );
                               },

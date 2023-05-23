@@ -1,10 +1,15 @@
+import 'package:cet_hostel/screens/hostel_staff/messbill/card_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class MessBillDetailsScreen extends StatefulWidget {
   final String uid;
+  final String roomid;
 
-  MessBillDetailsScreen({required this.uid});
+  MessBillDetailsScreen({required this.uid, required this.roomid});
 
   @override
   _MessBillDetailsScreenState createState() => _MessBillDetailsScreenState();
@@ -20,34 +25,90 @@ class _MessBillDetailsScreenState extends State<MessBillDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    _calculateMessBill();
+    // _calculateMessBill();
+    _getArrayLength();
   }
 
-  void _calculateMessBill() async {
-    FirebaseFirestore.instance.collection('Rooms').get().then((roomDocs) {
-      roomDocs.docs.forEach((roomDoc) {
-        final room = roomDoc.data();
-        final roomId = room['roomid'];
-
-        FirebaseFirestore.instance
-            .collection('attendence')
-            .doc('id')
-            .get()
-            .then((attendenceDoc) {
-          print(attendenceDoc.data());
-          if (attendenceDoc.exists) {
-            final attendence = attendenceDoc.data();
-
-            int _totalAttendence = (attendence?['precents'] as List<dynamic>)
-                .where((element) => element == true)
-                .length;
-            print(_totalAttendence);
-            int _totalmesscharges = _totalAttendence * 120;
-          }
-        });
-      });
+  Future<void> _getArrayLength() async {
+    final length = await getAttendanceLength(widget.roomid, widget.uid);
+    setState(() {
+      _totalAttendence = length;
+      _totalmesscharges = _totalAttendence * 120;
     });
   }
+
+  Future<int> getAttendanceLength(String roomId, String uid) async {
+    final docSnapshot = await FirebaseFirestore.instance
+        .collection('Rooms')
+        .doc(widget.roomid)
+        .collection('attendence')
+        .doc(widget.uid)
+        .get();
+
+    final dataArray = docSnapshot.data()?['precents'] as List<dynamic>?;
+    return dataArray?.length ?? 0;
+  }
+
+  // Future<void> _payMessBill() async {
+  //   try {
+  //     final paymentMethod = await StripePayment.paymentRequestWithCardForm(
+  //       CardFormPaymentRequest(),
+  //     );
+
+  //     final paymentIntent = await _createPaymentIntent(paymentMethod);
+
+  //     await StripePayment.confirmPaymentIntent(
+  //       PaymentIntent(
+  //         clientSecret: paymentIntent['client_secret'],
+  //         paymentMethodId: paymentMethod.id,
+  //       ),
+  //     );
+
+  //     // Payment successful, update the UI or database accordingly
+  //   } catch (e) {
+  //     // Payment failed, handle the error
+  //   }
+  // }
+
+  // Future<Map<String, dynamic>> _createPaymentIntent(
+  //     PaymentMethod paymentMethod) async {
+  //   final url = Uri.parse('https://your-server.com/create-payment-intent');
+  //   final response = await http.post(url, body: {
+  //     'amount': '1000', // replace with the actual amount
+  //     'currency': 'usd',
+  //     'payment_method': paymentMethod.id,
+  //   });
+
+  //   return jsonDecode(response.body);
+  // }
+
+  // void _calculateMessBill() async {
+  //   FirebaseFirestore.instance.collection('Rooms').get().then((roomDocs) {
+  //     roomDocs.docs.forEach((roomDoc) {
+  //       final room = roomDoc.data();
+  //       final roomId = room['roomid'];
+
+  //       FirebaseFirestore.instance
+  //           .collection('attendence')
+  //           .doc('id')
+  //           .get()
+  //           .then((attendenceDoc) {
+  //         print(attendenceDoc.data());
+  //         if (attendenceDoc.exists) {
+  //           final attendence = attendenceDoc.data();
+
+  //           _totalAttendence = (attendence?['precents'] as List<dynamic>)
+  //               .where((element) => element == true)
+  //               .length;
+  //           print("raees testing");
+  //           print(_totalAttendence);
+
+  //           int _totalmesscharges = _totalAttendence * 120;
+  //         }
+  //       });
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +198,16 @@ class _MessBillDetailsScreenState extends State<MessBillDetailsScreen> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Code to pay the mess bill
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => card_form(),
+                      ),
+                    );
                   },
+                  // () async {
+                  //   await _payMessBill();
+                  // },
                   child: Text('Pay Mess Bill'),
                 ),
               ),

@@ -41,8 +41,10 @@ dependencies:
   flutter_email_sender: ^5.2.0
   flutter_icons: ^1.1.0
   flutter_launcher_icons: ^0.13.1
+  flutter_stripe: ^9.2.0
   flutter_svg: ^2.0.2
   fluttertoast: ^8.2.1
+  http: ^0.13.6
   image_picker: ^0.8.6+4
   line_awesome_flutter: ^2.0.0
   mailer: ^6.0.1
